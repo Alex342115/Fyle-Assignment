@@ -1,0 +1,91 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: white;
+  width: 100%;
+  height: 100vh;
+  /* border: 2px solid red; */
+}
+
+/* User Information */
+main {
+  padding: 1.5rem 2.5rem;
+}
+.user-info {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  gap: 8rem;
+  align-items: center;
+}
+
+.user-img {
+  width: 200px;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+  /* border-radius: 50%; */
+  border: 2px solid red;
+}
+
+/* User Repos */
+
+.user-repos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* border: 2px solid red; */
+  gap: 2rem;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  width: 43rem;
+  height: 12rem;
+  align-items: flex start;
+  padding: 0.5rem 1rem;
+  gap: 0.5rem;
+  border: 2px solid black;
+}
+
+.repo-name {
+  font-size: 2rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: hsl(208, 56%, 53%);
+}
+
+.repo-desc {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  /* border: 2px solid red; */
+  max-width: 50rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: wrap;
+}
+
+.repo-tags {
+  display: flex;
+  gap: 0.7rem;
+  height: 2rem;
+}
+.repo-tags li {
+  text-decoration: none;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  padding: 5px;
+  border: 2px solid black;
+  background-color: hsl(208, 56%, 53%);
+  border-radius: 0.25rem;
+  color: white;
+}
