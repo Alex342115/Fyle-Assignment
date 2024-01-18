@@ -3,12 +3,22 @@ const main = document.querySelector("main");
 const navBar = document.querySelector(".page-nav");
 const navBarBtn = document.querySelector(".pagination-bar");
 
-const userName = "getlost01";
+var userName = "Alex342115";
+const formSubmit = () => {
+  console.log("formSubmit");
+  const searchBox = document.querySelector(".searchBar");
+  if (searchBox.value !== "") {
+    getUserData(searchBox.value);
+    userName = searchBox.value;
+  }
+  return false;
+};
 
 const getUserData = async (username) => {
   fetch(ApiURl + username)
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
       const pageNumber = Math.ceil(data.public_repos / 10);
       // console.log(pageNumber );
       const card = `<div class="user-info">
@@ -21,18 +31,32 @@ const getUserData = async (username) => {
       <div class="user-info-left">
         <h1 class="user-name">${data.name}</h1>
         <h3 class="user-bio">${data.Bio || ""}</h3>
-        <h3 class="user-location">${data.location || ""}</h3>
-        <ul class="social-handles">
-          <li>Twitter: </li>
-        </ul>
+        ${
+          data.location
+            ? `<h3 class="user-location">
+              <i class="fa-solid fa-location-dot"></i> ${data.location}
+            </h3>`
+            : ""
+        }
+        
+        ${
+          data.twitter_username
+            ? `<h3 class="user-handle">
+              Twitter: ${data.twitter_username}
+            </h3>`
+            : ""
+        } 
+        
       </div>
     </div>
-    <a class="user-link" href="${data.html_url}"><h3>${data.html_url}</h3></a>
+    <a class="user-link" href="${
+      data.html_url
+    }"><h3><i class="fa-solid fa-link"></i> ${data.html_url}</h3></a>
     <div class="user-repos"></div>
     `;
 
       main.innerHTML = card;
-      getRepos(userName, 2);
+      getRepos(userName, 1);
       getPageNav(userName, 1, pageNumber);
     });
 };
@@ -45,7 +69,8 @@ const getRepos = async (username, pageNumber) => {
     .then((response) => response.json())
     .then((data) => {
       {
-        let tempRepo="";
+        console.log(data);
+        let tempRepo = "";
         data.map((element) => {
           const repoTags = element.topics;
           const repoTag = repoTags.map((tag) => {
@@ -74,19 +99,36 @@ const getRepos = async (username, pageNumber) => {
 };
 
 const getPageNav = (username, pageNumber, maxPageNumber) => {
+  let tempNavBar = "";
   for (let i = 1; i <= maxPageNumber; i++) {
-    const navLink = `<li onclick='getRepos_util(event)'>${i}</li>`;
-    navBar.innerHTML += navLink;
+    const navLink = `<li ${
+      i === 1 ? "class=active" : " "
+    } onclick='getRepos_util(event)'>${i}</li>`;
+    tempNavBar += navLink;
+  }
+  navBar.innerHTML = tempNavBar;
+  if (maxPageNumber > 1) {
+    navBar.innerHTML =
+      `<li onclick='prevRepo_Util(event)'>&laquo;</li>` + navBar.innerHTML;
+    navBar.innerHTML += `<li onclick='nextRepo_Util(event)'>&raquo;</li>`;
   }
 };
 
 function getRepos_util(event) {
   const btnValue = event.target.innerHTML;
+  const currentPage = document.querySelector(".active");
+  currentPage.classList.remove("active");
+  event.target.classList.add("active");
   getRepos(userName, btnValue);
 }
 
-getUserData(userName);
+function nextRepo_Util(event) {
+  const navLength = navBar.length;
+  console.log(navBar);
+  const currentPage = document.querySelector(".active").innerHTML;
+}
 
+getUserData("getlost01");
 //  <li onclick='getRepos_util'>1</li>
 //         <li onclick='getRepos_util'>2</li>
 //         <li onclick='getRepos_util'>3</li>
