@@ -2,10 +2,13 @@ const ApiURl = "https://api.github.com/users/";
 const main = document.querySelector("main");
 const navBar = document.querySelector(".page-nav");
 const navBarBtn = document.querySelector(".pagination-bar");
+var perPage = 10;
+var globalpageNumber = 1;
+var maxPage = 1;
+var userName = "";
 
-var userName = "Alex342115";
 const formSubmit = () => {
-  console.log("formSubmit");
+  // console.log("formSubmit");
   const searchBox = document.querySelector(".searchBar");
   if (searchBox.value !== "") {
     getUserData(searchBox.value);
@@ -14,15 +17,34 @@ const formSubmit = () => {
   return false;
 };
 
+const pageNumberSubmit = () => {
+  const perPageBox = document.querySelector(".pageBar");
+  if (perPageBox.value !== "") {
+    if (perPageBox.value > 100) {
+      perPage = 100;
+    }
+    perPage = perPageBox.value;
+    console.log(perPageBox.value);
+    getUserData(userName);
+  }
+  return false;
+};
+
+// console.log(perPage);
 const getUserData = async (username) => {
   fetch(ApiURl + username)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      const pageNumber = Math.ceil(data.public_repos / 10);
-      if (pageNumber > 10) {
-        pageNumber = 10;
+    .then((response) => {
+      // console.log(response);
+      if (!response.ok) {
+        throw new Error(`HTTP Error! status: ${response.status}`);
       }
+      return response.json();
+    })
+    .then((data) => {
+      // console.log(data);
+      const pageNumber = Math.ceil(data.public_repos / perPage);
+      maxPage = pageNumber;
+
       // console.log(pageNumber );
       const card = `<div class="user-info">
       <img
@@ -32,7 +54,7 @@ const getUserData = async (username) => {
       />
 
       <div class="user-info-left">
-        <h1 class="user-name">${data.name}</h1>
+        <h1 class="user-name">${data.name}</bh1>
         <h3 class="user-bio">${data.Bio || ""}</h3>
         ${
           data.location
@@ -59,8 +81,15 @@ const getUserData = async (username) => {
     `;
 
       main.innerHTML = card;
-      getRepos(userName, 1);
+      getRepos(userName, 1, perPage);
       getPageNav(userName, 1, pageNumber);
+    })
+    .catch((error) => {
+      console.log(error);
+      main.innerHTML = `<h1 class="error">User Not Found</h1>`;
+    })
+    .finally(() => {
+      console.log("apli call done");
     });
 };
 
@@ -68,8 +97,15 @@ const getRepos = async (username, pageNumber) => {
   const userRepos = document.querySelector(".user-repos");
   console.log(pageNumber);
 
-  fetch(ApiURl + username + "/repos?per_page=10&page=" + pageNumber)
-    .then((response) => response.json())
+  fetch(
+    ApiURl + username + "/repos?per_page=" + perPage + "&page=" + pageNumber
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP Error! status: ${response.status}`);
+      }
+      return response.json();
+    })
     .then((data) => {
       {
         console.log(data);
@@ -98,6 +134,13 @@ const getRepos = async (username, pageNumber) => {
         });
         userRepos.innerHTML = tempRepo;
       }
+    })
+    .catch((error) => {
+      console.log(error);
+      main.innerHTML = `<h1 class="error">User Not Found</h1>`;
+    })
+    .finally(() => {
+      console.log("apli call for repos done");
     });
 };
 
@@ -119,6 +162,7 @@ const getPageNav = (username, pageNumber, maxPageNumber) => {
 
 function getRepos_util(event) {
   const btnValue = event.target.innerHTML;
+  globalpageNumber = btnValue;
   const currentPage = document.querySelector(".active");
   currentPage.classList.remove("active");
   event.target.classList.add("active");
@@ -126,9 +170,31 @@ function getRepos_util(event) {
 }
 
 function nextRepo_Util(event) {
-  const navLength = navBar.length;
-  console.log(navBar);
-  const currentPage = document.querySelector(".active").innerHTML;
+  const currentPage = document.querySelector(".active");
+  // console.log(globalpageNumber);
+  if (maxPage > currentPage.innerHTML) {
+    currentPage.classList.remove("active");
+    // console.log(currentPage.nextElementSibling);
+    currentPage.nextElementSibling.classList.add("active");
+    globalpageNumber++;
+    getRepos(userName, globalpageNumber);
+  }
+
+  // const currentPage = document.querySelector(".active").innerHTML;
+}
+
+function prevRepo_Util(event) {
+  const currentPage = document.querySelector(".active");
+  // console.log(globalpageNumber);
+  if (currentPage.innerHTML > 1) {
+    currentPage.classList.remove("active");
+    // console.log(currentPage.nextElementSibling);
+    currentPage.previousElementSibling.classList.add("active");
+    globalpageNumber--;
+    getRepos(userName, globalpageNumber);
+  }
+
+  // const currentPage = document.querySelector(".active").innerHTML;
 }
 
 // getUserData("getlost01");

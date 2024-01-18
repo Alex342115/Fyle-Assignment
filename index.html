@@ -13,7 +13,6 @@
     <title>Document</title>
   </head>
   <body>
-    
     <!-- Search Bar -->
     <form id="form" onsubmit=" return formSubmit()">
       <input
@@ -21,6 +20,10 @@
         placeholder="Enter the GitHub Username"
         class="searchBar"
       />
+    </form>
+    <form onsubmit="return pageNumberSubmit()">
+      <h5 class="repo-page">Repos per page:-</h5>
+      <input type="text" placeholder="Default 10 Max 100" class="pageBar" />
     </form>
     <!-- Info Post -->
     <main>

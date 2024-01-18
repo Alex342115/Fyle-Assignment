@@ -13,6 +13,7 @@ form {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 0.5rem;
   background-color: grey;
 }
 .searchBar {
@@ -24,6 +25,19 @@ form {
   margin: 1.5rem;
   border: 2px solid black;
   border-radius: 0.4rem;
+}
+
+.repo-page {
+  color: white;
+}
+.pageBar {
+  /* width: ; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.25rem;
+  /* background-color: grey; */
 }
 
 /* User Information */
@@ -162,7 +176,7 @@ main {
   list-style: none;
   border: 1px solid grey;
   color: hsl(208, 82%, 46%);
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .page-nav li:focus,
