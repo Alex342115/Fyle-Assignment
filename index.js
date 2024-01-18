@@ -20,6 +20,9 @@ const getUserData = async (username) => {
     .then((data) => {
       console.log(data);
       const pageNumber = Math.ceil(data.public_repos / 10);
+      if (pageNumber > 10) {
+        pageNumber = 10;
+      }
       // console.log(pageNumber );
       const card = `<div class="user-info">
       <img
@@ -128,7 +131,7 @@ function nextRepo_Util(event) {
   const currentPage = document.querySelector(".active").innerHTML;
 }
 
-getUserData("getlost01");
+// getUserData("getlost01");
 //  <li onclick='getRepos_util'>1</li>
 //         <li onclick='getRepos_util'>2</li>
 //         <li onclick='getRepos_util'>3</li>
