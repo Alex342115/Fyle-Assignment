@@ -4,5 +4,5 @@
 
 3.GitHub Rest API is used to fetch the data of Github Users through their username which is ="https://api.github.com/users/".
 
-4. This project displays all the public repos of the user and divides the repos into 10-100 repos per page through pagination.
+4. This project displays all the public repos of the user and divides the repos into 10-100 repos per page through pagination. 
     
