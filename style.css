@@ -31,14 +31,11 @@ form {
   color: white;
 }
 .pageBar {
-  /* width: ; */
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
   border-radius: 0.25rem;
-  position: relative;
-  /* background-color: grey; */
 }
 
 /* User Information */
@@ -47,22 +44,21 @@ main {
 }
 .loader {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  /* height: 70vh; */
-  /* width: 100%; */
-  /* translate: transform(-50%, -50%); */
-  /* border: 2px solid red; */
+  width: 100%;
+  height: 100%;
+  background-color: hsla(208, 56%, 53%, 0.3);
   z-index: 999;
 }
 
-.hidden{
+.hidden {
   display: none;
 }
 
-.loader img{
-  /* display: */
+.loader img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 9999;
   width: 4rem;
   height: 4rem;
@@ -82,7 +78,6 @@ main {
   object-fit: contain;
   border-radius: 50%;
   margin-bottom: 2rem;
-  /* border: 2px solid red; */
 }
 .user-name {
   font-size: 2rem;
@@ -132,7 +127,6 @@ main {
   flex-direction: column;
   justify-content: start;
   width: 43rem;
-  /* height: 12rem; */
   align-items: flex start;
   padding: 0.5rem 1rem;
   gap: 0.5rem;
@@ -149,18 +143,15 @@ main {
 .repo-desc {
   font-size: 1.25rem;
   font-weight: 500;
-  /* height: 1.5rem; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* border: 2px solid red; */
 }
 
 .repo-tags {
   padding: 0;
   display: flex;
   gap: 0.7rem;
-  /* border : 2px solid black; */
 }
 .repo-tags li {
   text-decoration: none;
@@ -171,7 +162,6 @@ main {
   justify-content: center;
   align-items: center;
   padding: 5px;
-  /* border: 2px solid red; */
   background-color: hsl(208, 56%, 53%);
   border-radius: 0.25rem;
   color: white;
@@ -187,7 +177,6 @@ main {
   gap: 1rem;
   margin-top: 2rem;
   margin-right: 1rem;
-  /* border: 2px solid black; */
 }
 
 .page-nav {
@@ -213,4 +202,11 @@ main {
 li.active {
   color: white;
   background-color: hsl(208, 82%, 46%);
+}
+
+.error {
+  width: 100%;
+  text-align: center;
+  margin-top: 5rem;
+  text-decoration: underline;
 }

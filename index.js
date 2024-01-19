@@ -87,6 +87,7 @@ const getUserData = async (username) => {
       getPageNav(userName, 1, pageNumber);
     })
     .catch((error) => {
+      loader.classList.add("hidden");
       console.log(error);
       main.innerHTML = `<h1 class="error">User Not Found</h1>`;
     })
