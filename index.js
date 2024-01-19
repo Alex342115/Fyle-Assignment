@@ -66,9 +66,11 @@ const getUserData = async (username) => {
         
         ${
           data.twitter_username
-            ? `<h3 class="user-handle">
-              Twitter: ${data.twitter_username}
-            </h3>`
+            ? `<a class="user-handle" href="https://twitter.com/${data.twitter_username}">
+            <h3 >
+              Twitter
+            </h3>
+            </a>`
             : ""
         } 
         

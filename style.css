@@ -75,8 +75,13 @@ main {
 }
 
 .user-handle {
-  font-size: 1.25rem;
+  text-decoration: none;
   margin-bottom: 0.8rem;
+}
+.user-handle h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: hsl(208, 56%, 53%);
 }
 .user-link {
   text-decoration: none;
