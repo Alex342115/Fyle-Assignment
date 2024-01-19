@@ -1,14 +1,15 @@
 const ApiURl = "https://api.github.com/users/";
 const main = document.querySelector("main");
+const loader = document.querySelector(".loader");
 const navBar = document.querySelector(".page-nav");
 const navBarBtn = document.querySelector(".pagination-bar");
+
 var perPage = 10;
 var globalpageNumber = 1;
 var maxPage = 1;
 var userName = "";
 
 const formSubmit = () => {
-  // console.log("formSubmit");
   const searchBox = document.querySelector(".searchBar");
   if (searchBox.value !== "") {
     getUserData(searchBox.value);
@@ -30,22 +31,21 @@ const pageNumberSubmit = () => {
   return false;
 };
 
-// console.log(perPage);
 const getUserData = async (username) => {
+  loader.classList.remove("hidden");
   fetch(ApiURl + username)
     .then((response) => {
-      // console.log(response);
       if (!response.ok) {
         throw new Error(`HTTP Error! status: ${response.status}`);
       }
       return response.json();
     })
     .then((data) => {
-      // console.log(data);
+      loader.classList.add("hidden");
+
       const pageNumber = Math.ceil(data.public_repos / perPage);
       maxPage = pageNumber;
 
-      // console.log(pageNumber );
       const card = `<div class="user-info">
       <img
         class="user-img"
@@ -130,9 +130,7 @@ const getRepos = async (username, pageNumber) => {
           <h4 class="repo-desc">${element.description || ""}</h4>
           <ul class="repo-tags">${repoTag.join(" ")}</ul>
           </div>`;
-          // getTags(element.topics);
           tempRepo += repo;
-          // console.log(tempRepo)
         });
         userRepos.innerHTML = tempRepo;
       }
@@ -173,45 +171,20 @@ function getRepos_util(event) {
 
 function nextRepo_Util(event) {
   const currentPage = document.querySelector(".active");
-  // console.log(globalpageNumber);
   if (maxPage > currentPage.innerHTML) {
     currentPage.classList.remove("active");
-    // console.log(currentPage.nextElementSibling);
     currentPage.nextElementSibling.classList.add("active");
     globalpageNumber++;
     getRepos(userName, globalpageNumber);
   }
-
-  // const currentPage = document.querySelector(".active").innerHTML;
 }
 
 function prevRepo_Util(event) {
   const currentPage = document.querySelector(".active");
-  // console.log(globalpageNumber);
   if (currentPage.innerHTML > 1) {
     currentPage.classList.remove("active");
-    // console.log(currentPage.nextElementSibling);
     currentPage.previousElementSibling.classList.add("active");
     globalpageNumber--;
     getRepos(userName, globalpageNumber);
   }
-
-  // const currentPage = document.querySelector(".active").innerHTML;
 }
-
-// getUserData("getlost01");
-//  <li onclick='getRepos_util'>1</li>
-//         <li onclick='getRepos_util'>2</li>
-//         <li onclick='getRepos_util'>3</li>
-//         <li onclick='getRepos_util'>4</li>
-//         <li onclick='getRepos_util'>5</li>
-
-// const getTags = (topics) => {
-//   const repoTags = document.querySelector(".repo-tags");
-//   console.log(repoTags);
-//   topics.map((topic) => {
-//     const tag = `<li class="repo-tag">${topic}</li>`;
-//     repoTags.innerHTML += tag;
-//   });
-//   console.log(repoTags);
-// };

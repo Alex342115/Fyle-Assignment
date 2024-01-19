@@ -37,6 +37,7 @@ form {
   align-items: center;
   gap: 0.5rem;
   border-radius: 0.25rem;
+  position: relative;
   /* background-color: grey; */
 }
 
@@ -44,6 +45,30 @@ form {
 main {
   padding: 1.5rem 2.5rem;
 }
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* height: 70vh; */
+  /* width: 100%; */
+  /* translate: transform(-50%, -50%); */
+  /* border: 2px solid red; */
+  z-index: 999;
+}
+
+.hidden{
+  display: none;
+}
+
+.loader img{
+  /* display: */
+  z-index: 9999;
+  width: 4rem;
+  height: 4rem;
+  aspect-ratio: 1;
+}
+
 .user-info {
   display: flex;
   justify-content: center;
